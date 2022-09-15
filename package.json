@@ -1,0 +1,53 @@
+{
+  "name": "mini-app",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "cross-env react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "vk-miniapps-deploy",
+    "tunnel": "vk-tunnel --insecure=1 --http-protocol=https --ws-protocol=wss --host=localhost --port=10888"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "@vkontakte/vk-bridge": "latest",
+    "@vkontakte/vk-miniapps-deploy": "0.0.25",
+    "@vkontakte/vk-tunnel": "^0.1.2",
+    "axios": "^0.27.2",
+    "babel-eslint": "^10.1.0",
+    "canvas": "^2.9.3",
+    "prettier": "^2.7.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass": "^1.54.9",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "react-hot-loader": "^4.13.0",
+    "react-scripts": "^4.0.3"
+  },
+  "resolutions": {
+    "react-scripts/webpack-dev-server/yargs/yargs-parser": ">=18.1.2"
+  },
+  "overrides": {
+    "es5-ext@^0.10.50": "0.10.53"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
