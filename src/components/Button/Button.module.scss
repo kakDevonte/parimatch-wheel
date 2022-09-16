@@ -1,0 +1,31 @@
+.box {
+  width: 80%;
+  color: white;
+  position: relative;
+  padding: 10px 15px;
+  font-family: "Montserrat Extra Bold";
+  display: inline-block;
+  margin: 5px;
+  font-size: 12px;
+  transform: skew(-15deg);
+  transition: 300ms;
+
+  &:active {
+    transform: skew(-15deg) translate(10px);
+  }
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  padding: 2px; /* control the border thickness */
+  background: linear-gradient(90deg, #753BBD 7.69%, #00C7B1 99.92%);
+  -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

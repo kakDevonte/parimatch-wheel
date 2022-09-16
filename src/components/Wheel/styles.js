@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const RouletteContainer = styled.div`
   position: relative;
-  height: 99.2%;
+  height: 99.7%;
   overflow: hidden;
   object-fit: contain;
   flex-shrink: 0;
@@ -83,7 +83,7 @@ export const RouletteLineImage = styled.img`
 
   position: absolute;
   z-index: 1;
-  width: 5px;
+  width: 4px;
   height: 100%;
   left: ${(props) => props.posLeft}px;
   top: ${(props) => props.posTop}px;
