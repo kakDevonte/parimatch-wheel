@@ -130,7 +130,7 @@ export const Home = () => {
               На удачу
             </h1>
             <p className={`  ${styles.obmanka} ${styles.subTittle}`}>
-              asdadasd
+              asdadasdfdhgdhgdhfdfhgddfdghfd dfdfgdf fg fdghd hfdh dhgfd
             </p>
           </>
         ) : (

@@ -6,6 +6,10 @@ body{
     background: #0c0000;
 }
 
+:root {
+    --title-font-size: 2.5em;
+}
+
 *{
     box-sizing: border-box;
     -webkit-touch-callout: none;

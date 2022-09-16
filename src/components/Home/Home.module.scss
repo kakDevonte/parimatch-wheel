@@ -39,6 +39,17 @@
     font-weight: 700;
     font-family: "Montserrat Italic";
   }
+
+
+  @media (max-width: 450px) {
+    --title-font-size: 2em;
+  }
+  @media (max-width: 320px) {
+    --title-font-size: 1.6em;
+  }
+  @media (max-width: 280px) {
+    --title-font-size: 1.4em;
+  }
 }
 
 .title {
@@ -46,7 +57,7 @@
   margin-block-end: 0;
   letter-spacing: 2px;
   position: relative;
-  font-size: 2.3em;
+  font-size: var(--title-font-size);
   font-family: "Montserrat Black Italic";
   text-transform: uppercase;
   background: linear-gradient(180deg, #753BBD 0%, #00C7B1 100%);
