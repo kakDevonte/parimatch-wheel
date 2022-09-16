@@ -1,7 +1,16 @@
 .root {
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
+.titleContainer {
+
+}
+
+.resultContainer {
+  height: 100%;
+}
 .title {
   color: white;
   font-size: 2em;
@@ -17,7 +26,7 @@
 .result {
   position: relative;
   font-family: "Montserrat Black Italic";
-  font-size: 4em;
+  font-size: 3em;
   background: linear-gradient(90.51deg, #00C7B1 25.03%, #753BBD 80.92%);
   //background: linear-gradient(270deg, #753BBD 0%, #00C7B1 100%);
   -webkit-background-clip: text;

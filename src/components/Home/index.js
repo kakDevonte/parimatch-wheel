@@ -123,18 +123,25 @@ export const Home = () => {
   //!showWin && isMount
   return (
     <div className={styles.root} ref={divRef}>
-      {!showWin ? (
-        <h1 className={styles.title} data-text="На удачу">
-          На удачу
-        </h1>
-      ) : (
-        <div className={styles.titleContainer}>
-          <h1 className={styles.titleResult}>{result.title}</h1>
-          <p className={styles.subTittle}>{result.subTittle}</p>
-        </div>
-      )}
-      {!showWin ? (
-        <div className={styles.wheelBox}>
+      <div className={styles.titleContainer}>
+        {!showWin ? (
+          <>
+            <h1 className={styles.title} data-text="На удачу">
+              На удачу
+            </h1>
+            <p className={`  ${styles.obmanka} ${styles.subTittle}`}>
+              asdadasd
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className={styles.titleResult}>{result.title}</h1>
+            <p className={styles.subTittle}>{result.subTittle}</p>
+          </>
+        )}
+      </div>
+      <div className={styles.wheelBox}>
+        {!showWin ? (
           <Wheel
             mustStartSpinning={mustSpin}
             prizeNumber={prizeNumber}
@@ -143,14 +150,12 @@ export const Home = () => {
               setMustSpin(false);
             }}
           />
-        </div>
-      ) : (
-        <div className={styles.resultContainer}>
+        ) : (
           <h1 className={styles.result} data-text={result.view}>
             {result.view}
           </h1>
-        </div>
-      )}
+        )}
+      </div>
       <div className={styles.buttons}>
         <span>5 попыток</span>
         <MainButton onClick={handleSpinClick} disabled={mustSpin} />
@@ -162,3 +167,42 @@ export const Home = () => {
     </div>
   );
 };
+
+// <div className={styles.root} ref={divRef}>
+//   {!showWin ? (
+//       <h1 className={styles.title} data-text="На удачу">
+//         На удачу
+//       </h1>
+//   ) : (
+//       <div className={styles.titleContainer}>
+//         <h1 className={styles.titleResult}>{result.title}</h1>
+//         <p className={styles.subTittle}>{result.subTittle}</p>
+//       </div>
+//   )}
+//   {!showWin ? (
+//       <div className={styles.wheelBox}>
+//         <Wheel
+//             mustStartSpinning={mustSpin}
+//             prizeNumber={prizeNumber}
+//             data={data}
+//             onStopSpinning={() => {
+//               setMustSpin(false);
+//             }}
+//         />
+//       </div>
+//   ) : (
+//       <div className={styles.resultContainer}>
+//         <h1 className={styles.result} data-text={result.view}>
+//           {result.view}
+//         </h1>
+//       </div>
+//   )}
+//   <div className={styles.buttons}>
+//     <span>5 попыток</span>
+//     <MainButton onClick={handleSpinClick} disabled={mustSpin} />
+//     <div className={styles.container}>
+//       <Button title={"Правила"} onClick={() => navigate("/rules")} />
+//       <Button title={"Лидеры"} onClick={() => navigate("/leaders")} />
+//     </div>
+//   </div>
+// </div>
