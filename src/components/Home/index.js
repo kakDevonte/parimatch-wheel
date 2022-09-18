@@ -3,7 +3,6 @@ import { Wheel } from "../Wheel";
 import styles from "./Home.module.scss";
 import MainButton from "../MainButton";
 import Button from "../Button";
-import Result from "../Result";
 import { useNavigate } from "react-router-dom";
 
 const data = [
@@ -71,14 +70,6 @@ const data = [
   },
 ];
 
-const win = {
-  id: "+10",
-  title: "В ДЕСЯТКУ!",
-  subTittle: "Понемногу пробиваемся в лидеры топа. Так держать!",
-  view: "+10 БАЛЛОВ",
-  int: 5000,
-};
-
 const randomByArrayWithChances = (data) => {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
@@ -120,16 +111,15 @@ export const Home = () => {
     setShowWin(false);
     setMustSpin(true);
   };
-  //!showWin && isMount
   return (
-    <div className={styles.root} ref={divRef}>
+    <div className={`${styles.root} ${showWin ? styles.bg : ""}`} ref={divRef}>
       <div className={styles.titleContainer}>
         {!showWin ? (
           <>
             <h1 className={styles.title} data-text="На удачу">
               На удачу
             </h1>
-            <p className={`  ${styles.obmanka} ${styles.subTittle}`}>
+            <p className={`${styles.plug} ${styles.subTittle}`}>
               asdadasdfdhgdhgdhfdfhgddfdghfd dfdfgdf fg fdghd hfdh dhgfd
             </p>
           </>
@@ -160,49 +150,10 @@ export const Home = () => {
         <span>5 попыток</span>
         <MainButton onClick={handleSpinClick} disabled={mustSpin} />
         <div className={styles.container}>
-          <Button title={"Правила"} onClick={() => navigate("/rules")} />
-          <Button title={"Лидеры"} onClick={() => navigate("/leaders")} />
+          <Button title={"Правила"} onClick={() => navigate(`/info/${1}`)} />
+          <Button title={"Лидеры"} onClick={() => navigate(`/info/${0}`)} />
         </div>
       </div>
     </div>
   );
 };
-
-// <div className={styles.root} ref={divRef}>
-//   {!showWin ? (
-//       <h1 className={styles.title} data-text="На удачу">
-//         На удачу
-//       </h1>
-//   ) : (
-//       <div className={styles.titleContainer}>
-//         <h1 className={styles.titleResult}>{result.title}</h1>
-//         <p className={styles.subTittle}>{result.subTittle}</p>
-//       </div>
-//   )}
-//   {!showWin ? (
-//       <div className={styles.wheelBox}>
-//         <Wheel
-//             mustStartSpinning={mustSpin}
-//             prizeNumber={prizeNumber}
-//             data={data}
-//             onStopSpinning={() => {
-//               setMustSpin(false);
-//             }}
-//         />
-//       </div>
-//   ) : (
-//       <div className={styles.resultContainer}>
-//         <h1 className={styles.result} data-text={result.view}>
-//           {result.view}
-//         </h1>
-//       </div>
-//   )}
-//   <div className={styles.buttons}>
-//     <span>5 попыток</span>
-//     <MainButton onClick={handleSpinClick} disabled={mustSpin} />
-//     <div className={styles.container}>
-//       <Button title={"Правила"} onClick={() => navigate("/rules")} />
-//       <Button title={"Лидеры"} onClick={() => navigate("/leaders")} />
-//     </div>
-//   </div>
-// </div>

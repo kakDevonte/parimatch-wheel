@@ -1,12 +1,13 @@
 .box {
+  text-transform: uppercase;
   width: 80%;
   color: white;
   position: relative;
-  padding: 10px 15px;
+  padding: 1em 1em;
   font-family: "Montserrat Extra Bold";
   display: inline-block;
   margin: 5px;
-  font-size: 12px;
+  font-size: var(--button-font-size);
   transform: skew(-15deg);
   transition: 300ms;
 

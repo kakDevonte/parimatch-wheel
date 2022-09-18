@@ -3,11 +3,14 @@ body{
     position: fixed;
     width: 100%;
     min-height: 100vh;
-    background: #0c0000;
 }
 
 :root {
     --title-font-size: 2.5em;
+    --wheel-size: 95%;
+    --sub-tittle-font-size: 2em;
+    --button-font-size: 0.7em;
+    --main-button-font-size: 1em;
 }
 
 *{
