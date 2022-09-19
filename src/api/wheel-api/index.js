@@ -1,8 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const instance = axios.create({
-  //baseURL: 'http://localhost:5000/api/',
-  baseURL: 'https://dead-pear-chipmunk-suit.cyclic.app/api/',
+  baseURL: "http://85.143.175.133:5000/api/",
 });
 
 export const wheelAPI = {
@@ -12,13 +11,10 @@ export const wheelAPI = {
   createUser(user) {
     return instance.post(`users/`, user);
   },
-  changeBalance(user) {
-    return instance.put(`users/`, user);
+  getUsers() {
+    return instance.get(`users/`);
   },
-  getWinners() {
-    return instance.get(`winners/`);
-  },
-  addWinner(winner) {
-    return instance.post(`winners/`, winner);
+  updateUser(user) {
+    return instance.post(`users/`, user);
   },
 };

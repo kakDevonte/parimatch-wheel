@@ -1,17 +1,21 @@
-import React from 'react';
-import { wheelAPI } from '../api/wheel-api';
+import React from "react";
+import { wheelAPI } from "../api/wheel-api";
 
-const SET_USER = 'SET_USER';
-const SET_USER_INFO = 'SET_USER_INFO';
-const SET_WINNERS = 'SET_WINNERS';
-const ADD_WINNER = 'ADD_WINNER';
-const CHANGE_BALANCE = 'CHANGE_BALANCE';
+const SET_USER = "SET_USER";
+const SET_USER_INFO = "SET_USER_INFO";
+const SET_USERS = "SET_USERS";
+const CHANGE_USER = "CHANGE_USER";
 
 const initialState = {
-  userInfo: null,
-  user: null,
-  winners: [],
+  user: {
+    telegram_id: 1,
+    telegram_username: "bla",
+    points: 0,
+    tryCount: 5,
+  },
+  users: [],
 };
+
 const WheelContext = React.createContext();
 
 export const WheelContextProvider = (props) => {
@@ -19,7 +23,16 @@ export const WheelContextProvider = (props) => {
 
   const actions = {
     getUser: async (id) => {
-      let currUser = { id, balance: 1000 };
+      const telegram = window.Telegram.WebApp;
+      telegram.ready();
+      telegram.expand();
+
+      let currUser = {
+        telegram_id: telegram.initDataUnsafe.user.id,
+        telegram_username: telegram.initDataUnsafe.user.username,
+        points: 0,
+        tryCount: 5,
+      };
       const { data } = await wheelAPI.getUser(id);
 
       if (!data.user) {
@@ -27,39 +40,23 @@ export const WheelContextProvider = (props) => {
       } else {
         currUser = data.user;
       }
-
       dispatch({
         type: SET_USER,
         payload: currUser,
       });
     },
-    changeBalance: async (currUser) => {
-      const { data } = await wheelAPI.changeBalance(currUser);
+    changeUser: async (currUser) => {
+      const { data } = await wheelAPI.updateUser(currUser);
       dispatch({
-        type: CHANGE_BALANCE,
+        type: CHANGE_USER,
         payload: data.user,
       });
     },
-    getWinners: async () => {
-      const { data } = await wheelAPI.getWinners();
-
+    getUsers: async () => {
+      const { data } = await wheelAPI.getUsers();
       dispatch({
-        type: SET_WINNERS,
-        payload: data.winners,
-      });
-    },
-    addWinner: async (winner) => {
-      const { data } = await wheelAPI.addWinner(winner);
-
-      dispatch({
-        type: SET_WINNERS,
-        payload: data.winners,
-      });
-    },
-    setUserInfo: (info) => {
-      dispatch({
-        type: SET_USER_INFO,
-        payload: info,
+        type: SET_USERS,
+        payload: data.users,
       });
     },
   };
@@ -76,17 +73,11 @@ const reducer = (state, action) => {
     case SET_USER: {
       return { ...state, user: action.payload };
     }
-    case SET_WINNERS: {
-      return { ...state, winners: action.payload };
+    case SET_USERS: {
+      return { ...state, users: action.payload };
     }
-    case ADD_WINNER: {
-      return { ...state, winners: action.payload };
-    }
-    case CHANGE_BALANCE: {
+    case CHANGE_USER: {
       return { ...state, user: action.payload };
-    }
-    case SET_USER_INFO: {
-      return { ...state, userInfo: action.payload };
     }
   }
 };

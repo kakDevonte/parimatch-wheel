@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./LeadersPage.module.scss";
 import Button from "../../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import { useWheelActions, useWheelState } from "../../contexts/wheel-context";
 
 const leaders = [
   {
@@ -72,10 +73,31 @@ const leaders = [
   },
 ];
 
+const firstNameFormatting = (string) => {
+  if (string) return string[0] + "*".repeat(1) + string.slice(-1);
+  else return "";
+};
+
+const lastNameFormatting = (string) => {
+  if (string) return string[0] + string[1] + "*".repeat(3) + string.slice(-2);
+  else return "";
+};
+
 const LeadersPage = () => {
   const { show } = useParams();
+  const { getUsers } = useWheelActions();
+  const { users } = useWheelState();
   const [isRules, setIsRules] = React.useState(Boolean(parseInt(show)));
+  const [userList, setUserList] = React.useState([]);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    getUsers();
+  }, [isRules]);
+
+  React.useEffect(() => {
+    if (users.length) setUserList(users.slice(0, 10));
+  }, [users]);
 
   return (
     <div className={styles.root}>
@@ -93,12 +115,12 @@ const LeadersPage = () => {
       <div className={styles.container}>
         {!isRules ? (
           <div className={styles.leaders}>
-            {leaders.slice(0, 10).map((item, index) => (
-              <div className={styles.leader}>
+            {userList.map((item, index) => (
+              <div className={styles.leader} key={index}>
                 <span>
-                  {index + 1}. {item.firstName + " " + item.lastName}
+                  {index + 1}. {firstNameFormatting(item.telegram_username)}
                 </span>
-                <span>{item.result}</span>
+                <span>{item.points}</span>
               </div>
             ))}
             <div className={styles.you}>

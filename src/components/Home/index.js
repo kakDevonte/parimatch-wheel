@@ -4,6 +4,7 @@ import styles from "./Home.module.scss";
 import MainButton from "../MainButton";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import { useWheelActions, useWheelState } from "../../contexts/wheel-context";
 
 const data = [
   {
@@ -29,6 +30,7 @@ const data = [
       "Даже не знаем, что лучше: 100 друзей или 100 баллов. Продолжаем!",
     view: "+100 БАЛЛОВ",
     int: 1000,
+    result: 100,
   },
   {
     id: "+50",
@@ -37,6 +39,7 @@ const data = [
       "Стакан наполовину полон? Ты получаешь 50 баллов, а это ровно половина от максимума. Круто, крути дальше!",
     view: "+50 БАЛЛОВ",
     int: 1000,
+    result: 50,
   },
   {
     id: "+10",
@@ -44,6 +47,7 @@ const data = [
     subTittle: "Понемногу пробиваемся в лидеры топа. Так держать!",
     view: "+10 БАЛЛОВ",
     int: 5000,
+    result: 10,
   },
   {
     id: "+5",
@@ -52,6 +56,7 @@ const data = [
       "Неплохо, а, главное, результативно – ты набираешь 5 баллов. Дай пять!",
     view: "+5 БАЛЛОВ",
     int: 5000,
+    result: 5,
   },
   {
     id: "+0",
@@ -59,6 +64,7 @@ const data = [
     subTittle: "Попытка хорошая, но баллов, увы, не принесла. Попробуем снова?",
     view: "+0 БАЛЛОВ",
     int: 5000,
+    result: 0,
   },
   {
     id: "-10",
@@ -67,6 +73,7 @@ const data = [
       "Немного не повезло, фортуна отвернулась от тебя. Чем же ты ей насолил?",
     view: "–10 БАЛЛОВ",
     int: 5000,
+    result: -10,
   },
 ];
 
@@ -86,6 +93,29 @@ const randomByArrayWithChances = (data) => {
   return data[i];
 };
 
+const tryWord = (tryCount) => {
+  switch (tryCount) {
+    case 4: {
+      return "4 поптыки";
+    }
+    case 3: {
+      return "3 поптыки";
+    }
+    case 2: {
+      return "2 поптыки";
+    }
+    case 1: {
+      return "1 попытка";
+    }
+    case 0: {
+      return "0 попыток";
+    }
+    default: {
+      return tryCount + " попыток";
+    }
+  }
+};
+
 export const Home = () => {
   const [prizeNumber, setPrizeNumber] = React.useState(0);
   const [mustSpin, setMustSpin] = React.useState(false);
@@ -94,6 +124,8 @@ export const Home = () => {
   const [result, setResult] = React.useState(data[0]);
   const divRef = React.useRef(null);
   const navigate = useNavigate();
+  const { user } = useWheelState();
+  const { changeUser } = useWheelActions();
 
   React.useEffect(() => {
     setIsMount(true);
@@ -103,13 +135,19 @@ export const Home = () => {
     if (isMount && !mustSpin) {
       setShowWin(true);
       setResult(randomByArrayWithChances(data));
-      console.log(result);
     }
   }, [mustSpin]);
 
   const handleSpinClick = () => {
     setShowWin(false);
     setMustSpin(true);
+    changeUser({
+      telegram_id: user.telegram_id,
+      telegram_username: user.telegram_username,
+      points: user.points + result.result,
+      tryCount:
+        result.title === "ВТОРОЙ ШАНС" ? user.tryCount + 1 : user.tryCount - 1,
+    });
   };
   return (
     <div className={`${styles.root} ${showWin ? styles.bg : ""}`} ref={divRef}>
@@ -147,8 +185,11 @@ export const Home = () => {
         )}
       </div>
       <div className={styles.buttons}>
-        <span>5 попыток</span>
-        <MainButton onClick={handleSpinClick} disabled={mustSpin} />
+        <span>{tryWord(user.tryCount)}</span>
+        <MainButton
+          onClick={handleSpinClick}
+          disabled={mustSpin || !user.tryCount}
+        />
         <div className={styles.container}>
           <Button title={"Правила"} onClick={() => navigate(`/info/${1}`)} />
           <Button title={"Лидеры"} onClick={() => navigate(`/info/${0}`)} />
