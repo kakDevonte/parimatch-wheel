@@ -3,8 +3,8 @@ import { Home } from "./components/Home";
 import LeadersPage from "./pages/LeadersPage";
 import { Route, Routes } from "react-router-dom";
 import LoaderPage from "./pages/LoaderPage";
-import "./App.scss";
 import { useWheelActions } from "./contexts/wheel-context";
+import "./App.scss";
 
 export const App = () => {
   const { getUser } = useWheelActions();

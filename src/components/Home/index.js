@@ -14,6 +14,7 @@ const data = [
       "Мы сами почти не верим, что это произошло. Ты выиграл фрибет на 200р. Наш менеджер свяжется с тобой, чтобы уточнить детали личного счета.",
     view: "Продолжай играть, кажется, тебе очень везёт!",
     int: 100,
+    result: 0,
   },
   {
     id: "ВТОРОЙ ШАНС",
@@ -22,6 +23,7 @@ const data = [
       "В этот раз баллов ты не заработал, но получаешь дополнительную попытку! Давай ещё разок?",
     view: "+1 ПОПЫТКА",
     int: 1000,
+    result: 0,
   },
   {
     id: "+100",
@@ -134,38 +136,43 @@ export const Home = () => {
   React.useEffect(() => {
     if (isMount && !mustSpin) {
       setShowWin(true);
-      setResult(randomByArrayWithChances(data));
+      const currResult = randomByArrayWithChances(data);
+      setResult(currResult);
+
+      changeUser({
+        telegram_id: user.telegram_id,
+        telegram_username: user.telegram_username,
+        points: user.points + currResult.result,
+        tryCount:
+          currResult.title === "ВТОРОЙ ШАНС"
+            ? user.tryCount
+            : user.tryCount - 1,
+      });
     }
   }, [mustSpin]);
 
   const handleSpinClick = () => {
     setShowWin(false);
     setMustSpin(true);
-    changeUser({
-      telegram_id: user.telegram_id,
-      telegram_username: user.telegram_username,
-      points: user.points + result.result,
-      tryCount:
-        result.title === "ВТОРОЙ ШАНС" ? user.tryCount + 1 : user.tryCount - 1,
-    });
   };
+
   return (
     <div className={`${styles.root} ${showWin ? styles.bg : ""}`} ref={divRef}>
       <div className={styles.titleContainer}>
         {!showWin ? (
-          <>
+          <div>
             <h1 className={styles.title} data-text="На удачу">
               На удачу
             </h1>
-            <p className={`${styles.plug} ${styles.subTittle}`}>
-              asdadasdfdhgdhgdhfdfhgddfdghfd dfdfgdf fg fdghd hfdh dhgfd
-            </p>
-          </>
+            {/*<p className={`${styles.plug} ${styles.subTittle}`}>*/}
+            {/*  asdadasdfdhgdhgdhfdfhgddfdghfd dfdfgdf fg fdghd hfdh dhgfd*/}
+            {/*</p>*/}
+          </div>
         ) : (
-          <>
+          <div className={styles.titleContainer}>
             <h1 className={styles.titleResult}>{result.title}</h1>
             <p className={styles.subTittle}>{result.subTittle}</p>
-          </>
+          </div>
         )}
       </div>
       <div className={styles.wheelBox}>

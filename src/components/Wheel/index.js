@@ -10,10 +10,10 @@ import img from "../../assets/arrow.png";
 import line from "../../assets/line.png";
 
 const STARTED_SPINNING = "started-spinning";
-const START_SPINNING_TIME = 2600;
-const CONTINUE_SPINNING_TIME = 750;
-const STOP_SPINNING_TIME = 8000;
-const DEFAULT_SPIN_DURATION = 1.0;
+const START_SPINNING_TIME = 1100; //2600;
+const CONTINUE_SPINNING_TIME = 300; //750;
+const STOP_SPINNING_TIME = 3000; //8000;
+const DEFAULT_SPIN_DURATION = 0.8;
 
 const getRotationDegrees = (prizeNumber, numberOfPrizes) => {
   const degreesPerPrize = 360 / numberOfPrizes;

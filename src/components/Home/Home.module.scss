@@ -5,7 +5,7 @@
   display: grid;
   justify-content: center;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto 0.1fr auto;
+  grid-template-rows: 0.5fr auto 0.1fr auto;
   color: white;
 
   text-align: center;
@@ -24,15 +24,18 @@
 }
 
 .titleContainer {
+  margin-top: 2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   justify-self: center;
   align-self: center;
+  text-align: center;
 
   min-width: 100%;
   min-height: 80px;
   p {
+    padding: 0 15px;
     margin-top: 10px;
     min-height: 50px;
   }
@@ -110,7 +113,7 @@
   margin-block-start: 0;
   margin-block-end: 0;
   color: white;
-  font-size: var(--title-font-size);
+  font-size: var(--sub-tittle-font-size);
   font-family: "Montserrat Black Italic";
   justify-self: center;
   align-self: center;
@@ -136,7 +139,7 @@
   margin-block-start: 0;
   margin-block-end: 0;
   color: white;
-  font-size: 0.7em;
+  font-size: 0.75em;
   font-family: "Montserrat";
 }
 

@@ -33,12 +33,13 @@ export const WheelContextProvider = (props) => {
         points: 0,
         tryCount: 5,
       };
+
       const { data } = await wheelAPI.getUser(id);
 
-      if (!data.user) {
+      if (!data) {
         await wheelAPI.createUser(currUser);
       } else {
-        currUser = data.user;
+        currUser = data;
       }
       dispatch({
         type: SET_USER,
@@ -49,7 +50,7 @@ export const WheelContextProvider = (props) => {
       const { data } = await wheelAPI.updateUser(currUser);
       dispatch({
         type: CHANGE_USER,
-        payload: data.user,
+        payload: data,
       });
     },
     getUsers: async () => {

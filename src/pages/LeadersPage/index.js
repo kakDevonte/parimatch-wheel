@@ -83,20 +83,42 @@ const lastNameFormatting = (string) => {
   else return "";
 };
 
+const containsObject = (obj, list) => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].telegram_id === obj.telegram_id) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const LeadersPage = () => {
   const { show } = useParams();
   const { getUsers } = useWheelActions();
-  const { users } = useWheelState();
+  const { users, user } = useWheelState();
   const [isRules, setIsRules] = React.useState(Boolean(parseInt(show)));
   const [userList, setUserList] = React.useState([]);
+  const [isOnList, setIsOnList] = React.useState(true);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    getUsers();
+  }, []);
 
   React.useEffect(() => {
     getUsers();
   }, [isRules]);
 
   React.useEffect(() => {
-    if (users.length) setUserList(users.slice(0, 10));
+    if (users.length) {
+      const list = users.slice(0, 10);
+      setUserList(
+        list.sort((a, b) => parseFloat(b.points) - parseFloat(a.points))
+      );
+      list.length > 1
+        ? setIsOnList(containsObject(user, list))
+        : setIsOnList(false);
+    }
   }, [users]);
 
   return (
@@ -115,20 +137,32 @@ const LeadersPage = () => {
       <div className={styles.container}>
         {!isRules ? (
           <div className={styles.leaders}>
-            {userList.map((item, index) => (
-              <div className={styles.leader} key={index}>
+            {userList.length > 1 &&
+              userList.map((item, index) => (
+                <div
+                  className={`${styles.leader} ${
+                    isOnList &&
+                    item.telegram_id === user.telegram_id &&
+                    styles.you
+                  }`}
+                  key={index}
+                >
+                  <span>
+                    {index + 1}. {firstNameFormatting(item.telegram_username)}
+                  </span>
+                  <span>{item.points}</span>
+                </div>
+              ))}
+            {!isOnList && (
+              <div className={styles.you}>
                 <span>
-                  {index + 1}. {firstNameFormatting(item.telegram_username)}
+                  {userList.length > 1
+                    ? userList.length + 1
+                    : 1 + ". " + user.telegram_username}
                 </span>
-                <span>{item.points}</span>
+                <span>{user.points}</span>
               </div>
-            ))}
-            <div className={styles.you}>
-              <span>
-                11. {leaders[0].firstName + " " + leaders[0].lastName}
-              </span>
-              <span>{leaders[0].result}</span>
-            </div>
+            )}
           </div>
         ) : (
           <div className={styles.rules}>

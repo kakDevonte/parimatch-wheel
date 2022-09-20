@@ -9,6 +9,7 @@ const randomIntFromInterval = (min, max) =>
 const LoaderPage = () => {
   const [uploadOrDownloadCount, setUploadOrDownloadCount] = React.useState(10);
   const navigate = useNavigate();
+
   React.useEffect(() => {
     const timer = setInterval(() => {
       setUploadOrDownloadCount((beforeValue) =>
@@ -21,6 +22,10 @@ const LoaderPage = () => {
       clearInterval(timer);
     };
   }, []);
+
+  const handleLoading = () => {
+    setIsLoading(true);
+  };
 
   return (
     <div className={styles.root}>

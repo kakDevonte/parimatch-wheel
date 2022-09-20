@@ -18,16 +18,20 @@
 
     @media (max-width: 450px) {
         --title-font-size: 2.3em;
+        --sub-tittle-font-size: 1.8em;
     }
     @media (max-width: 380px) {
         --title-font-size: 1.8em;
+        --sub-tittle-font-size: 1.6em;
     }
     @media (max-width: 320px) {
         --title-font-size: 1.6em;
+        --sub-tittle-font-size: 1.4em;
     }
     @media (max-height: 500px) {
         --wheel-size: 70%;
         --title-font-size: 1.6em;
+        --sub-tittle-font-size: 1.4em;
         --main-button-font-size: 0.8em;
         --button-font-size: 0.6em;
     }
@@ -37,4 +41,9 @@
     @media (max-height: 400px) {
         --wheel-size: 60%;
     }
+}
+
+.imageLoad {
+    display: none;
+    position: absolute;
 }
